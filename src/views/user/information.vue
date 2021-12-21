@@ -48,6 +48,13 @@ export default {
         callback();
       }
     };
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'));
+      } else {
+        callback();
+      }
+    };
     return {
       ruleForm: {
         username: '',
@@ -57,6 +64,9 @@ export default {
       rules: {
         username: [
           { validator: validateUsername, trigger: 'blur' }
+        ],
+        password: [
+          { validator: validatePass, trigger: 'blur' }
         ],
         email: [
           {validator: validateEmail, trigger:'blur'}

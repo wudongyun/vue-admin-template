@@ -1,32 +1,43 @@
 <template>
   <div class="page">
-    <el-table :data="tableData" >
+    <el-table :data="tableData.slice((dictCurrentPage-1)*dictPageSize,dictCurrentPage*dictPageSize)" >
       <el-table-column prop="id" label="编号" width='100px'></el-table-column>
-      <el-table-column prop="start-time" label="投稿时间" ></el-table-column>
-      <el-table-column prop="end-time" label="修改时间"  :formatter="formatSex"></el-table-column>
-      <el-table-column prop="name" label="文章题目"></el-table-column>
-      <el-table-column prop="review" label="审稿人"></el-table-column>
-      <el-table-column prop="status"  :formatter="formatterColumn" label="审核状态" ></el-table-column>
-      <el-table-column header-align="center" align="center" prop="operate" label="操作" width="200px">
+      <el-table-column prop="create_time" label="投稿时间" ></el-table-column>
+      <el-table-column prop="update_time" label="修改时间"  :formatter="formatSex"></el-table-column>
+      <el-table-column prop="paper_title" label="文章题目"></el-table-column>
+      <el-table-column prop="reviewer_list" label="审稿人"></el-table-column>
+      <el-table-column prop="status"   label="审核状态" ></el-table-column>
+      <el-table-column header-align="center" align="center"  label="操作" width="270px">
+        <template slot-scope="scope">
         <el-button
           size="mini"
           icon="el-icon-zoom-in"
-          @click="handleview">查看
+          @click="handleview(scope.row)">查看
         </el-button>
         <el-button
           size="mini"
           icon="el-icon-edit"
-          @click="handle"
+          @click="handle(scope.row)"
           v-if="">修改
         </el-button>
         <el-button
           size="mini"
           icon="el-icon-delete"
-          @click="handledelete"
+          @click="handledelete(scope.row)"
           v-if="">删除
         </el-button>
+        </template>
       </el-table-column>
     </el-table>
+    <el-pagination class="fy"
+                   layout="sizes, prev, pager, next, total"
+                   :current-page.sync="dictCurrentPage"
+                   :total="dictTotal"
+                   background
+                   :page-sizes="[12]"
+                   :page-size.sync="dictPageSize"
+    >
+    </el-pagination>
   </div>
 </template>
 
@@ -34,33 +45,107 @@
 export default {
   data(){
     return{
+      dictTotal:0,
+      dictCurrentPage:1,
+      dictPageSize:12,
       tableData: [{
-        id:'1',
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄',
-        IsAudit:0,
-        sex:'1'
-      }, {
-        id:'2',
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄',
-        IsAudit:1,
-        sex:'0'
-      }, {
-        id:'3',
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄',
-        IsAudit:10,
-        sex:'-1'
+        id:1,
+        create_time:'sd'
+      },{
+        id:2
+      },{
+        id:3
+      },{
+        id:4
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
+      },{
+        id:5
       }]
+    }
+  },
+  mounted() {
+    this.initData();
+  },
+  methods:{
+    initData(){
+      this.$http
+        .get("/ProjectWeb/PaperServlet", {params: {method: 'list', contributor_id: '2'}}, {emulateJSON: true})
+        .then((response) => {
+          this.tableData=response.data;
+          this.dictTotal = this.tableData.length;
+        }).catch(err =>{
+        console.log(err.data)
+      });
+      this.dictTotal=this.tableData.length;
+    },
+    handleview(row){
+      this.$router.push({
+        path: '/user/des',
+        // name: 'mallList',
+        query: {
+          parms:row
+        }
+      })
+    },
+    handle(row){
+      this.$router.push({
+        path: '/user/change',
+        // name: 'mallList',
+        query: {
+          parms:row
+        }
+      })
+    },
+    handledelete(row){
+      this.tableData.pop(1)
+      this.initData();
+      console.log(this.tableData)
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.page{
+  position: relative;
+  .fy{
+    position: absolute;
+    //bottom: 2px;
+    margin-top: 20px;
+    right: 10px;
+  }
+}
 </style>

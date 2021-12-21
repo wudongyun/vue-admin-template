@@ -80,6 +80,16 @@ export const constantRoutes = [
         name: 'table',
         path: '/user/table',
         component: () => import('@/views/user/table'),
+      },
+      {
+        name: 'des',
+        path: '/user/des',
+        component: () => import('@/views/user/des'),
+      },
+      {
+        name: 'change',
+        path: '/user/change',
+        component: () => import('@/views/user/change'),
       }
     ]
   },
