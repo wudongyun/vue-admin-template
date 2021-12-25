@@ -87,8 +87,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http
-            .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
-                { method: '',
+            .get("http://localhost:8080/ProjectWeb/InfoServlet", {params:
+                { method: 'update',
                   name: formName.username,
                   password: formName.password,
                   institude: formName.address,
