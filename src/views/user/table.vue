@@ -64,7 +64,7 @@ export default {
       this.$http
         .get("http://localhost:8080/ProjectWeb/PaperServlet", {
           params:
-            { method: '',
+            { method: 'list',
               contributor_id: this.$store.state.username
             }}, {emulateJSON: true})
         .then((response) => {
@@ -74,6 +74,7 @@ export default {
         console.log(err.data)
       });
       this.dictTotal=this.tableData.length;
+
     },
     handleview(row){
       this.$router.push({

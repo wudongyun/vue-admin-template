@@ -59,28 +59,28 @@ export default {
     return {
       form:'',
       options: [{
-        value: '选项1',
+        value: '网络空间安全',
         label: '网络空间安全'
       }, {
-        value: '选项2',
+        value: '先进计算与数据处理',
         label: '先进计算与数据处理'
       }, {
-        value: '选项3',
+        value: '热点与综述',
         label: '热点与综述'
       }, {
-        value: '选项4',
+        value: '开发研究与工程应用',
         label: '开发研究与工程应用'
       }, {
-        value: '选项5',
+        value: '体系结构与软件技术',
         label: '体系结构与软件技术'
       }, {
-        value: '选项6',
+        value: '移动互联与通信技术',
         label: '移动互联与通信技术'
       }, {
-        value: '选项7',
+        value: '人工智能与模式识别',
         label: '人工智能与模式识别'
       }, {
-        value: '选项8',
+        value: '图形图像处理',
         label: '图形图像处理'
       }],
 

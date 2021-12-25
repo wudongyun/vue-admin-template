@@ -37,21 +37,12 @@ export default {
   methods:{
     initData(){
       for(let i = 0; i < 8 ; i++) {
-        //假数据
-        this.headerlist[i].list=[{
-          id: 1,
-          paper_title: 'nihao',
-          create_time: '2019-1-3',
-          contributor_name: 'xiao ji li li',
-          key: 'kfjdslafjkdsnf;a'
-        }]
-        console.log(i);
-        //--假数据
         this.$http
           .get("http://localhost:8080/ProjectWeb/PaperServlet", {
             params: {
-              method: '',
-              channel: i+1
+              method: 'list',
+              channel: this.headerlist[i].name,
+              status:5
             }
           }, {emulateJSON: true})
           .then((response) => {

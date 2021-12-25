@@ -128,12 +128,12 @@ export default {
           console.log(this.ruleForm)
           alert('登录成功!');
           this.$http
-            .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
-                { method: '',
-                  name: formName.username,
-                  email:formName.email,
-                  password: formName.password,
-                  role: formName.role
+            .get("http://localhost:8080/ProjectWeb/RegisterServlet", {params:
+                {
+                  username: this.ruleForm.username,
+                  email:this.ruleForm.email,
+                  password: this.ruleForm.password,
+                  actor: this.ruleForm.role
                 }}, {emulateJSON: true})
             .then((response) => {
               this.$store.commit('setUsername', this.ruleForm.username);

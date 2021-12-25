@@ -124,7 +124,7 @@
           <p>稿件题目：{{ form.paper_title }}</p>
           <p>中文摘要：{{ form.abstract_cn }}</p>
           <p>英文摘要：{{ form.abstract_eng }}</p>
-          <p>拟投栏目：{{ form.channel }}</p>
+          <p>拟投栏目：{{ form.lable }}</p>
           <p>稿件关键字：{{ form.keyword }}</p>
         </div>
         <div class="info" v-if="active===7">
@@ -148,28 +148,28 @@ export default {
     return {
       active: 0,
       options: [{
-        value: '选项1',
+        value: '网络空间安全',
         label: '网络空间安全'
       }, {
-        value: '选项2',
+        value: '先进计算与数据处理',
         label: '先进计算与数据处理'
       }, {
-        value: '选项3',
+        value: '热点与综述',
         label: '热点与综述'
       }, {
-        value: '选项4',
+        value: '开发研究与工程应用',
         label: '开发研究与工程应用'
       }, {
-        value: '选项5',
+        value: '体系结构与软件技术',
         label: '体系结构与软件技术'
       }, {
-        value: '选项6',
+        value: '移动互联与通信技术',
         label: '移动互联与通信技术'
       }, {
-        value: '选项7',
+        value: '人工智能与模式识别',
         label: '人工智能与模式识别'
       }, {
-        value: '选项8',
+        value: '图形图像处理',
         label: '图形图像处理'
       }],
       form: {
@@ -201,25 +201,24 @@ export default {
       console.log(this.form)
       this.$http
         .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
-            { method: '',
-              contributor_id: formName.contributor_id,
-              contributor_name: formName.contributor_name,
-              create_time: formName.create_time,
-              update_time: formName.update_time,
-              paper_title: formName.paper_title,
-              abstract_eng: formName.abstract_eng,
-              abstract_cn: formName.abstract_cn,
-              paper_content: formName.paper_content,
-              channel: formName.channel,
-              keyword: formName.keyword
+            { method: 'save',
+              contributor_id: this.form.contributor_id,
+              paper_author: this.form.contributor_name,
+              create_time: this.form.create_time,
+              update_time: this.form.update_time,
+              paper_title: this.form.paper_title,
+              abstract_eng: this.form.abstract_eng,
+              abstract_cn: this.form.abstract_cn,
+              paper_content: this.form.paper_content,
+              channel: this.form.channel,
+              keyword: this.form.keyword
             }}, {emulateJSON: true})
         .then((response) => {
           console.log("投稿成功")
+          this.active = 7;
         }).catch(err =>{
         console.log(err.data)
       });
-
-      this.active = 7;
     },
     //获取特定格式的日期时间  "yyyy-MM-dd HH:MMM:SS"
     getNewDate() {
