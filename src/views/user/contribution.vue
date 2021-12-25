@@ -12,7 +12,7 @@
     </el-steps>
     <!--     个人信息 -->
     <div class="form">
-      <el-form ref="form" status-icon :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" status-icon :model="form" label-width="80px">
         <div v-if="active===0">
           <div class="header"><h3>投稿确认书</h3>
             <p>尊敬的作者，您好！请您认真阅读下面选项，确认每项都同意后才能继续投稿。</p>
@@ -64,29 +64,6 @@
         </div>
         <div class="info" v-if="active===2">
           <div class="header"><h3>输入稿件信息</h3></div>
-          <el-form-item label="稿件语言" prop="language">
-            <el-radio-group v-model="form.language">
-              <el-radio label="English">英语稿件</el-radio>
-              <el-radio label="Chinese">中文稿件</el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="中文题目" prop="cnname">
-            <el-input type="text" v-model="form.cnname"></el-input>
-          </el-form-item>
-          <el-form-item label="英文题目" prop="enname">
-            <el-input type="text" v-model="form.enname"></el-input>
-          </el-form-item>
-          <el-form-item label="中文摘要" prop="cnsummary">
-            （请在下框中输入稿件中文摘要,或从您的论文中复制过来）
-            <el-input type="textarea" rows="4" v-model="form.cnsummary"></el-input>
-          </el-form-item>
-          <el-form-item label="英文摘要" prop="ensummary">
-            （请在下框中输入稿件英文摘要,或从您的论文中复制过来）
-            <el-input type="textarea" rows="4" v-model="form.ensummary"></el-input>
-          </el-form-item>
-        </div>
-        <div class="info" v-if="active===3">
-          <div class="header"><h3>输入稿件信息</h3></div>
           <el-form-item label="拟投栏目" prop="channel" label-width="100px">
             <el-select v-model="form.channel" placeholder="请选择拟投的栏目">
               <el-option
@@ -97,17 +74,42 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="中文关键字" prop="cnkeyword" label-width="100px">
-            （请在下框中输入稿件中文关键词,注意：多个关键词用分号分割。）
-            <el-input type="textarea" rows="2" v-model="form.cnkeyword"></el-input>
+          <el-form-item label="投稿人" prop="contributor_name">
+            <el-input type="text" v-model="form.contributor_name"></el-input>
           </el-form-item>
-          <el-form-item label="英文关键字" prop="enkeyword" label-width="100px">
-            （请在下框中输入稿件英文关键词,注意：多个关键词用分号分割; 顺序中文关键词一致。）
-            <el-input type="textarea" rows="2" v-model="form.enkeyword"></el-input>
+
+          <el-form-item label="稿件题目" prop="paper_title">
+            <el-input type="text" v-model="form.paper_title"></el-input>
+          </el-form-item>
+
+          <el-form-item label="关键字" prop="keyword" label-width="100px">
+            （请在下框中输入稿件中文关键词,注意：多个关键词用分号分割。）
+            <el-input type="textarea" rows="5" v-model="form.keyword"></el-input>
+          </el-form-item>
+        </div>
+        <div class="info" v-if="active===3">
+          <div class="header"><h3>输入稿件信息</h3></div>
+          <el-form-item label="中文摘要" prop="abstract_cn">
+            （请在下框中输入稿件中文摘要,或从您的论文中复制过来）
+            <el-input type="textarea" rows="6" v-model="form.abstract_cn"></el-input>
+          </el-form-item>
+          <el-form-item label="英文摘要" prop="abstract_eng">
+            （请在下框中输入稿件英文摘要,或从您的论文中复制过来）
+            <el-input type="textarea" rows="6" v-model="form.abstract_eng"></el-input>
           </el-form-item>
         </div>
         <div class="info" v-if="active===4">
-          <div class="header"><h3>上传稿件</h3></div>
+          <div class="header">
+            <el-upload
+              class="upload-demo"
+              drag
+              action="https://jsonplaceholder.typicode.com/posts/"
+              multiple>
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+              <div class="el-upload__tip" slot="tip">注意：在上面上传稿件的pdf版本</div>
+            </el-upload>
+          </div>
         </div>
         <div class="info" v-if="active===5">
           <div class="header"><h3>附加信息</h3></div>
@@ -118,14 +120,12 @@
         </div>
         <div class="info" v-if="active===6">
           <div class="header"><h3>稿件确认</h3></div>
-          <p>稿件语言：{{ form.language }}</p>
-          <p>中文题目：{{ form.cnname }}</p>
-          <p>英文题目：{{ form.enname }}</p>
-          <p>中文摘要：{{ form.cnsummary }}</p>
-          <p>英文摘要：{{ form.ensummary }}</p>
+          <p>投稿人：{{ form.contributor_name }}</p>
+          <p>稿件题目：{{ form.paper_title }}</p>
+          <p>中文摘要：{{ form.abstract_cn }}</p>
+          <p>英文摘要：{{ form.abstract_eng }}</p>
           <p>拟投栏目：{{ form.channel }}</p>
-          <p>中文关键字：{{ form.cnkeyword }}</p>
-          <p>英文关键字：{{ form.enkeyword }}</p>
+          <p>稿件关键字：{{ form.keyword }}</p>
         </div>
         <div class="info" v-if="active===7">
           <div class="final">
@@ -145,13 +145,6 @@
 <script>
 export default {
   data() {
-    var validate = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('内容不能为空'));
-      }else{
-        callback();
-      }
-    };
     return {
       active: 0,
       options: [{
@@ -180,25 +173,17 @@ export default {
         label: '图形图像处理'
       }],
       form: {
-        cnname: '',
-        enname: '',
-        language: '',
-        cnsummary: '',
-        ensummary: '',
+        contributor_id: '',
+        contributor_name: '',
+        create_time: '',
+        update_time: '',
+        paper_title: '',
+        abstract_eng: '',
+        abstract_cn: '',
+        paper_content: '',
         channel: '',
-        cnkeyword: '',
-        enkeyword: '',
+        keyword: '',
         advice: ''
-      },
-      rules: {
-        cnname: [{validator: validate, trigger: 'blur'}],
-        enname: [{validator: validate, trigger: 'blur'}],
-        language: [{validator: validate, trigger: 'blur'}],
-        cnsummary: [{validator: validate, trigger: 'blur'}],
-        ensummary: [{validator: validate, trigger: 'blur'}],
-        channel: [{validator: validate, trigger: 'blur'}],
-        cnkeyword: [{validator: validate, trigger: 'blur'}],
-        enkeyword: [{validator: validate, trigger: 'blur'}]
       }
     }
   },
@@ -210,18 +195,71 @@ export default {
       if (this.active-- < 1) this.active = 0;
     },
     commit(formName) {
+      this.form.create_time=this.getNewDate()
+      this.form.update_time=this.getNewDate()
+      this.form.contributor_id=this.$store.state.username
       console.log(this.form)
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          alert('提交失败');
-          return false;
-        }
+      this.$http
+        .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
+            { method: '',
+              contributor_id: formName.contributor_id,
+              contributor_name: formName.contributor_name,
+              create_time: formName.create_time,
+              update_time: formName.update_time,
+              paper_title: formName.paper_title,
+              abstract_eng: formName.abstract_eng,
+              abstract_cn: formName.abstract_cn,
+              paper_content: formName.paper_content,
+              channel: formName.channel,
+              keyword: formName.keyword
+            }}, {emulateJSON: true})
+        .then((response) => {
+          console.log("投稿成功")
+        }).catch(err =>{
+        console.log(err.data)
       });
+
       this.active = 7;
+    },
+    //获取特定格式的日期时间  "yyyy-MM-dd HH:MMM:SS"
+    getNewDate() {
+      var date = new Date();
+      // console.log(date);
+      var transverse = "-";
+      var Verticalpoint = ":";
+      var month = date.getMonth() + 1;//获取月份
+      var strDate = date.getDate();//获取具体的日期
+      var strHour = date.getHours();//获取...钟点
+      var strMinute = date.getMinutes();//获取分钟数
+      var strSeconde = date.getSeconds();//获取秒钟数
+      //判断获取月份 、 具体的日期 、...钟点、分钟数、秒钟数 是否在1~9
+      //如果是则在前面加“0”
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      // console.log(month);
+      if (strDate >= 1 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      if (strHour >= 1 && strHour <=9) {
+        strHour = "0" + strHour
+      }
+      // console.log(strHour);
+      if (strMinute >= 1 && strMinute <= 9) {
+        strMinute = "0" + strMinute;
+      }
+
+      if (strSeconde >= 1 && strSeconde <= 9) {
+        strSeconde = "0" + strSeconde;
+      }
+      //时间日期字符串拼接
+      var NewDate = date.getFullYear() + transverse + month + transverse + strDate + " " +
+        strHour + Verticalpoint + strMinute + Verticalpoint + strSeconde;
+      //返回拼接字符串
+      return NewDate;
     }
-  }
+
+}
 }
 </script>
 
@@ -237,8 +275,10 @@ export default {
     width: 70%;
 
     .header {
-      margin-top: 150px;
       text-align: center;
+      .upload-demo{
+        margin-top: 100px;
+      }
     }
 
     .content {

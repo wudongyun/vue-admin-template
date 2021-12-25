@@ -57,6 +57,11 @@ export const constantRoutes = [
         name: 'connect',
         path: '/index/connect',
         component: () => import('@/views/index/connect'),
+      },
+      {
+        name: 'desc',
+        path: '/index/desc',
+        component: () => import('@/views/index/desc'),
       }
     ]
   },
@@ -108,6 +113,16 @@ export const constantRoutes = [
         name: 'information',
         path: '/review/information',
         component: () => import('@/views/review/information'),
+      },
+      {
+        name: 'des',
+        path: '/review/des',
+        component: () => import('@/views/review/des'),
+      },
+      {
+        name: 'comment',
+        path: '/review/comment',
+        component: () => import('@/views/review/comment'),
       }
     ]
   },
@@ -117,15 +132,29 @@ export const constantRoutes = [
     component:()=>import('@/views/admin/index'),
     redirect: '/admin/thesis',
     children: [
-      // {
-      //   name: 'index',
-      //   path: '/admin/index',
-      //   component: () => import('@/views/admin/index'),
-      // },
       {
         name: 'thesis',
         path: '/admin/thesis',
         component: () => import('@/views/admin/thesis'),
+      },{
+        name: 'des_thesis',
+        path: '/admin/des_thesis',
+        component: () => import('@/views/admin/des_thesis'),
+      },
+      {
+        name: 'des',
+        path: '/admin/des',
+        component: () => import('@/views/admin/des'),
+      },
+      {
+        name: 'change_thesis',
+        path: '/admin/change_thesis',
+        component: () => import('@/views/admin/change_thesis'),
+      },
+      {
+        name: 'change',
+        path: '/admin/change',
+        component: () => import('@/views/admin/change'),
       },
       {
         name: 'user',

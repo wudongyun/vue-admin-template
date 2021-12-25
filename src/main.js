@@ -7,10 +7,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 // import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 
 //引入axios
+import VueResource from 'vue-resource'
 import axios from 'axios'
 // axios.defaults.baseURL = '/api'  //自动附加在所有axios请求前面，则可以省略/api，直接写'/xxxx/xxx'。否则需要设置'/api/xxxx/xxx'
 
-axios.defaults.baseURL='http://localhost:8080/api'
+// axios.defaults.baseURL='http://localhost:8080/api'
 Vue.prototype.$http =axios
 Vue.prototype.$qs = qs
 
@@ -40,7 +41,7 @@ import store from './store/store';
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI)
-
+Vue.use(VueResource)
 Vue.config.productionTip = false
 
 new Vue({

@@ -13,9 +13,9 @@
         </el-form-item>
         <el-form-item label="角 色" prop="role">
           <el-radio-group v-model="ruleForm.role">
-            <el-radio label="user">投稿人</el-radio>
-            <el-radio label="review">审稿人</el-radio>
-            <el-radio label="admin">管理员</el-radio>
+            <el-radio label="1">投稿人</el-radio>
+            <el-radio label="2">审稿人</el-radio>
+            <el-radio label="3">管理员</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item class="button">
@@ -86,9 +86,27 @@ export default {
       console.log(this.ruleForm)
       this.$refs[formName].validate((valid) => {
         if (valid) {
-
-          this.$router.replace('/user')
           alert('登录成功!');
+          this.$http
+            .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
+                { method: '',
+                  name: formName.username,
+                  password: formName.password,
+                  role: formName.role
+                }}, {emulateJSON: true})
+            .then((response) => {
+              this.$store.commit('setUsername', this.ruleForm.username);
+              if(this.ruleForm.role==="1"){
+                this.$router.replace('/user')
+              } else if(this.ruleForm.role==="2"){
+                this.$router.replace('/review');
+              } else{
+                this.$router.replace('/admin');
+              }
+            }).catch(err =>{
+            console.log(err.data)
+          });
+
         } else {
           console.log('登录失败，请输入正确的用户名和密码');
           return false;

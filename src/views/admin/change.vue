@@ -1,22 +1,26 @@
 <template>
   <div class="page">
-    <div class="main">
-      <h1 style="color: #b7b7a4;margin-bottom: 50px ">个人信息</h1>
-      <el-form label-position="left" label-width="80px" :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
-        <el-form-item label="用户名" prop="username" >
+    <div class="info">
+      <div class="header" style="text-align: center"><h3>修改个人信息</h3></div>
+      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
+        <el-form-item label="用户名" prop="username">
           <el-input type="text" v-model="ruleForm.username" ></el-input>
         </el-form-item>
-        <el-form-item label="密 码" prop="password">
-          <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
-        </el-form-item>
         <el-form-item label="邮箱" prop="email">
-          <el-input type="text" v-model="ruleForm.email" ></el-input>
+          <el-input type="email" v-model="ruleForm.email"></el-input>
         </el-form-item>
-        <el-form-item label="单位" prop="address">
-          <el-input type="text" v-model="ruleForm.address" ></el-input>
+        <el-form-item label="密码" prop="password">
+          <el-input type="password" v-model="ruleForm.password" ></el-input>
         </el-form-item>
-        <el-button  style="margin-top: 50px;" @click="commit('ruleForm')">修改</el-button>
+        <el-form-item label="单位" prop="institude">
+          <el-input type="password" v-model="ruleForm.institude"></el-input>
+        </el-form-item>
+        <el-form-item class="button">
+          <el-button  style="margin-left: 30px;background-color: #6b705c" type="primary" @click="submitForm('ruleForm')">提交</el-button>
+          <el-button  style="margin-left: 80px;background-color: #b7b7a4" @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
       </el-form>
+
     </div>
   </div>
 </template>
@@ -44,45 +48,38 @@ export default {
         callback();
       }
     };
-    var checkAddress = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入地址'));
-      }  else {
-        callback();
-      }
-    };
     var validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'));
       } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('checkPass');
+        }
         callback();
       }
     };
     return {
       ruleForm: {
         username: '',
-        password: '',
+        institude: '',
         email: '',
-        address:''
+        password: ''
       },
       rules: {
         username: [
           { validator: validateUsername, trigger: 'blur' }
         ],
-        password: [
-          { validator: validatePass, trigger: 'blur' }
-        ],
         email: [
           {validator: validateEmail, trigger:'blur'}
         ],
-        address: [
-          {validator: checkAddress,trigger: 'blur'}
+        password: [
+          { validator: validatePass, trigger: 'blur' }
         ]
       }
     };
   },
-  methods:{
-    commit(formName) {
+  methods: {
+    submitForm(formName) {
       console.log(this.ruleForm)
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -90,47 +87,32 @@ export default {
             .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
                 { method: '',
                   name: formName.username,
+                  email:formName.email,
                   password: formName.password,
-                  institude: formName.address,
-                  email:formName.email
+                  institude: formName.institude
                 }}, {emulateJSON: true})
             .then((response) => {
-              this.$store.commit('setUsername', this.ruleForm.username);
+              alert("修改成功！")
             }).catch(err =>{
             console.log(err.data)
           });
+
         } else {
           alert('修改失败');
           return false;
         }
       });
     },
-    initData(){
-      this.$http
-        .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
-            { method: '',
-              name: this.$store.state.username
-            }}, {emulateJSON: true})
-        .then((response) => {
-          this.ruleForm=response.data;
-        }).catch(err =>{
-        console.log(err.data)
-      });
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     }
-  },
-  mounted() {
-    this.initData();
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.page{
-  text-align: center;
-  width: 70%;
-  margin: 0 auto;
-  .main{
-    margin-top: 50px;
-  }
+.info{
+  width: 50%;
+  margin-left: 25%;
 }
 </style>

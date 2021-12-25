@@ -50,49 +50,9 @@ export default {
       dictPageSize:12,
       tableData: [{
         id:1,
-        create_time:'sd'
-      },{
-        id:2
-      },{
-        id:3
-      },{
-        id:4
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
-      },{
-        id:5
+        create_time:'sd',
+        channel:'人工智能与模式识别',
+        contributor_name:'dfsnkafn'
       }]
     }
   },
@@ -102,7 +62,11 @@ export default {
   methods:{
     initData(){
       this.$http
-        .get("/ProjectWeb/PaperServlet", {params: {method: 'list', contributor_id: '2'}}, {emulateJSON: true})
+        .get("http://localhost:8080/ProjectWeb/PaperServlet", {
+          params:
+            { method: '',
+              contributor_id: this.$store.state.username
+            }}, {emulateJSON: true})
         .then((response) => {
           this.tableData=response.data;
           this.dictTotal = this.tableData.length;
@@ -130,9 +94,18 @@ export default {
       })
     },
     handledelete(row){
-      this.tableData.pop(1)
+      this.$http
+        .get("http://localhost:8080/ProjectWeb/PaperServlet", {
+          params:
+            { method: '',
+              id: row.id
+            }}, {emulateJSON: true})
+        .then((response) => {
+          alert("删除成功！")
+        }).catch(err =>{
+        console.log(err.data)
+      });
       this.initData();
-      console.log(this.tableData)
     }
   }
 }

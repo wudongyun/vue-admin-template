@@ -6,6 +6,9 @@
         <el-form-item label="用户名" prop="username" >
           <el-input type="text" v-model="ruleForm.username" ></el-input>
         </el-form-item>
+        <el-form-item label="密 码" prop="password">
+          <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input type="text" v-model="ruleForm.email" ></el-input>
         </el-form-item>
@@ -58,6 +61,7 @@ export default {
     return {
       ruleForm: {
         username: '',
+        password: '',
         email: '',
         address:''
       },
@@ -82,13 +86,40 @@ export default {
       console.log(this.ruleForm)
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('修改成功!');
+          this.$http
+            .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
+                { method: '',
+                  name: formName.username,
+                  password: formName.password,
+                  institude: formName.address,
+                  email:formName.email
+                }}, {emulateJSON: true})
+            .then((response) => {
+              this.$store.commit('setUsername', this.ruleForm.username);
+            }).catch(err =>{
+            console.log(err.data)
+          });
         } else {
           alert('修改失败');
           return false;
         }
       });
+    },
+    initData(){
+      this.$http
+        .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
+            { method: '',
+              name: this.$store.state.username
+            }}, {emulateJSON: true})
+        .then((response) => {
+          this.ruleForm=response.data;
+        }).catch(err =>{
+        console.log(err.data)
+      });
     }
+  },
+  mounted() {
+    this.initData();
   }
 }
 </script>

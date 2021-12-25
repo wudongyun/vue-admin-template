@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="header"><h3>稿件详情信息</h3></div>
+    <div class="header"><h3>修改稿件信息</h3></div>
     <div class="form">
       <el-form ref="form" status-icon :model="form" label-width="80px">
         <div class="info">
@@ -98,7 +98,25 @@ export default {
       console.log(this.form)
     },
     change(){
-
+      this.$http
+        .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
+            { method: 'save',
+              id: this.form.id,
+              contributor_id: this.form.contributor_id,
+              contributor_name: this.form.contributor_name,
+              create_time: this.form.create_time,
+              update_time: this.form.update_time,
+              paper_title: this.form.paper_title,
+              abstract_eng: this.form.abstract_eng,
+              abstract_cn: this.form.abstract_cn,
+              paper_content: this.form.paper_content,
+              channel: this.form.channel,
+              keyword: this.form.keyword
+            }}, {emulateJSON: true})
+        .then((response) => {
+        }).catch(err =>{
+        console.log(err.data)
+      });
     }
   },
   watch: {
