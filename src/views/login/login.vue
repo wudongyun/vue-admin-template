@@ -86,10 +86,10 @@ export default {
       console.log(this.ruleForm)
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('登录成功!');
+          // alert('登录成功!');
           this.$http
-            .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
-                { method: '',
+            .get("http://localhost:8080/ProjectWeb/LoginServlet", {params:
+                {
                   username: formName.username,
                   password: formName.password,
                 }}, {emulateJSON: true})
