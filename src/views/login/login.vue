@@ -96,9 +96,9 @@ export default {
             .then((response) => {
               this.$store.commit('setUsername', response.data.username);
               this.$store.commit('setUserID', response.data.id);
-              if(response.data.role==="1"){
+              if(response.data.actor==="1"){
                 this.$router.replace('/user')
-              } else if(response.data.role==="2"){
+              } else if(response.data.actor==="2"){
                 this.$router.replace('/review');
               } else{
                 this.$router.replace('/admin');
