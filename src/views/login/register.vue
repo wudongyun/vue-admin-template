@@ -136,14 +136,9 @@ export default {
                   actor: this.ruleForm.role
                 }}, {emulateJSON: true})
             .then((response) => {
-              this.$store.commit('setUsername', this.ruleForm.username);
-              if(this.ruleForm.role==="1"){
-                this.$router.replace('/user')
-              } else if(this.ruleForm.role==="2"){
-                this.$router.replace('/review');
-              } else{
-                this.$router.replace('/admin');
-              }
+              this.$router.push({
+                path: '/login'
+              })
             }).catch(err =>{
             console.log(err.data)
           });
