@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 const state = {
   username: '',
+  userid: '',
 
 };
 
@@ -17,6 +18,9 @@ const getters = {
 const mutations = {
   setUsername(state, value) {
     state.username=value
+  },
+  setUserID(state, value) {
+    state.userid=value
   }
 };
 const actions = {

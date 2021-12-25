@@ -11,13 +11,13 @@
         <el-form-item label="密 码" prop="password">
           <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="角 色" prop="role">
-          <el-radio-group v-model="ruleForm.role">
-            <el-radio label="1">投稿人</el-radio>
-            <el-radio label="2">审稿人</el-radio>
-            <el-radio label="3">管理员</el-radio>
-          </el-radio-group>
-        </el-form-item>
+<!--        <el-form-item label="角 色" prop="role">-->
+<!--          <el-radio-group v-model="ruleForm.role">-->
+<!--            <el-radio label="1">投稿人</el-radio>-->
+<!--            <el-radio label="2">审稿人</el-radio>-->
+<!--            <el-radio label="3">管理员</el-radio>-->
+<!--          </el-radio-group>-->
+<!--        </el-form-item>-->
         <el-form-item class="button">
           <el-button  style="margin-left: 30px;background-color: #6b705c" type="primary" @click="submitForm('ruleForm')">提交</el-button>
           <el-button  style="margin-left: 80px;background-color: #b7b7a4" @click="resetForm('ruleForm')">重置</el-button>
@@ -90,15 +90,15 @@ export default {
           this.$http
             .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
                 { method: '',
-                  name: formName.username,
+                  username: formName.username,
                   password: formName.password,
-                  role: formName.role
                 }}, {emulateJSON: true})
             .then((response) => {
-              this.$store.commit('setUsername', this.ruleForm.username);
-              if(this.ruleForm.role==="1"){
+              this.$store.commit('setUsername', response.data.username);
+              this.$store.commit('setUserID', response.data.id);
+              if(response.data.role==="1"){
                 this.$router.replace('/user')
-              } else if(this.ruleForm.role==="2"){
+              } else if(response.data.role==="2"){
                 this.$router.replace('/review');
               } else{
                 this.$router.replace('/admin');
