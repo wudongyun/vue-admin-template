@@ -126,7 +126,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           console.log(this.ruleForm)
-          alert('登录成功!');
+          // alert('登录成功!');
           this.$http
             .get("http://localhost:8080/ProjectWeb/RegisterServlet", {params:
                 {
