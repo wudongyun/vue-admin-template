@@ -53,7 +53,9 @@ export default {
         id:1,
         create_time:'sd',
         channel:'人工智能与模式识别',
-        contributor_name:'dfsnkafn'
+        contributor_name:'dfsnkafn',
+        status:2,
+        reviewer_comment:'dskafn'
       },{
         id:1,
         create_time:'sd',
@@ -107,25 +109,28 @@ export default {
             }}, {emulateJSON: true})
         .then((response) => {
           alert("删除成功！")
+          this.initData();
+
         }).catch(err =>{
         console.log(err.data)
       });
-      this.initData();
     },
     stateFormat(row, column) {
       console.log("ces")
       if (row.status === 1) {
-        return  '已创建，待送审'
-      } else  if(row.status === 2) {
-        return '正在审核中'
-      }else  if(row.status === 3) {
-        return '审核通过'
-      }else  if(row.status === 4) {
-        return '审核驳回，待送审'
-      }else  if(row.status === 5) {
-        return '二次审核中'
-      }else {
-        return '驳回，关闭稿件工单'
+        return '未上传'
+      } else if (row.status === 2) {
+        return '已上传'
+      } else if (row.status === 3) {
+        return '正在审核'
+      } else if (row.status === 4) {
+        return '审核不通过'
+      } else if (row.status === 5) {
+        return '通过审核，待发表'
+      }else if (row.status === 5) {
+        return '审核不通过，不可再投稿，无效稿件'
+      } else {
+        return '已发表'
       }
     }
   }

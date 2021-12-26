@@ -5,7 +5,7 @@
       <el-table-column header-align="center" align="center" prop="username" label="姓名" width="70px"></el-table-column>
       <el-table-column header-align="center" align="center" prop="institude" label="单位" ></el-table-column>
       <el-table-column header-align="center" align="center" prop="email" label="邮箱" ></el-table-column>
-<!--      <el-table-column header-align="center" align="center" prop="password" label="密码"></el-table-column>-->
+      <el-table-column header-align="center" align="center" prop="role" label="角色" :formatter="stateFormat"></el-table-column>
       <el-table-column header-align="center" align="center" prop="operate" label="操作" width="270px">
         <template slot-scope="scope">
           <el-button
@@ -48,10 +48,11 @@ export default {
       tableData: [{
         id:'1',
         date: '2016-05-03',
-        name: '王小虎',
+        username: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄',
         IsAudit:0,
-        sex:'1'
+        sex:'1',
+        role:1
       }, {
         id:'2',
         date: '2016-05-02',
@@ -113,11 +114,20 @@ export default {
               username: row.username
             }}, {emulateJSON: true})
         .then((response) => {
-          alert("删除成功！")
+          this.initData();
         }).catch(err =>{
         console.log(err.data)
       });
-      this.initData();
+    },
+    stateFormat(row, column) {
+      console.log("ces")
+      if (row.role === 1) {
+        return '投稿人'
+      } else if (row.role === 2) {
+        return '审稿人'
+      } else {
+        return '管理员'
+     }
     }
   }
 }

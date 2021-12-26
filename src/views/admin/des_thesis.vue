@@ -7,13 +7,15 @@
       <p>投稿时间：{{ form.create_time }}</p>
       <p>修改时间：{{ form.update_time }}</p>
       <p>状态：{{ form.status }}</p>
-      <p>审稿人：{{ form.reviewer_list }}</p>
       <p>稿件题目：{{ form.paper_title }}</p>
       <p>中文摘要：{{ form.abstract_cn }}</p>
       <p>英文摘要：{{ form.abstract_eng }}</p>
       <p>拟投栏目：{{ form.channel }}</p>
       <p>关键字：{{ form.keyword }}</p>
       <p>稿件pdf：<a href="../../assets/DNNV.pdf" download="稿件pdf.pdf" style="color: #20a0ff">点击这里下载</a></p>
+      <div style="width:800px;height:1px;margin-left: 1px;padding:0px;overflow:hidden;background-color: black"></div>
+      <p>审稿人：{{ form.reviewer_list }}</p>
+      <p>稿件评语：{{ form.reviewer_comment }}</p>
     </div>
   </div>
 </template>
@@ -33,20 +35,22 @@ export default {
       this.stateFormat(this.form.status)
 
     },
-    stateFormat(params) {
-      // console.log("ces")
-      if (params === 1) {
-        this.form.status=  '已创建，待送审'
-      } else  if(params === 2) {
-        this.form.status='正在审核中'
-      }else  if(params === 3) {
-        this.form.status='审核通过'
-      }else  if(params === 4) {
-        this.form.status= '审核驳回，待送审'
-      }else  if(params === 5) {
-        this.form.status= '二次审核中'
-      }else {
-        this.form.status= '驳回，关闭稿件工单'
+    stateFormat(row, column) {
+      console.log("ces")
+      if (row.status === 1) {
+        this.form.status= '未上传'
+      } else if (row.status === 2) {
+        this.form.status= '已上传'
+      } else if (row.status === 3) {
+        this.form.status= '正在审核'
+      } else if (row.status === 4) {
+        this.form.status= '审核不通过'
+      } else if (row.status === 5) {
+        this.form.status= '通过审核，待发表'
+      }else if (row.status === 5) {
+        this.form.status= '审核不通过，不可再投稿，无效稿件'
+      } else {
+        this.form.status= '已发表'
       }
     }
   },

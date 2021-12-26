@@ -67,9 +67,9 @@ export default {
             { method: 'review',
               paper_id: this.form.id,
               status:this.ruleform.ispass,
-              review_comment:this.ruleform.review_comment,
-              review_id:this.$store.state.userid,
-              review_name:this.$store.state.username,
+              reviewer_comment:this.ruleform.review_comment,
+              reviewer_id:this.$store.state.userid,
+              reviewer_name:this.$store.state.username,
               contributor_id:this.form.contributor_id
             }}, {emulateJSON: true})
         .then((response) => {

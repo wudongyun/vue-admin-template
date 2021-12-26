@@ -1,166 +1,150 @@
 <template>
   <div class="page">
-    <div class="header"><h3>稿件详情信息</h3></div>
-    <div class="form">
-      <el-form ref="form" status-icon :model="form" label-width="80px">
-        <div class="info">
-          <el-form-item label="拟投栏目" prop="channel" label-width="100px">
-            <el-select v-model="form.channel" placeholder="请选择拟投的栏目">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="投稿人" prop="contributor_name">
-            <el-input type="text" v-model="form.contributor_name"></el-input>
-          </el-form-item>
-
-          <el-form-item label="稿件题目" prop="paper_title">
-            <el-input type="text" v-model="form.paper_title"></el-input>
-          </el-form-item>
-
-          <el-form-item label="关键字" prop="keyword" label-width="100px">
-            （请在下框中输入稿件中文关键词,注意：多个关键词用分号分割。）
-            <el-input type="textarea" rows="1" v-model="form.keyword"></el-input>
-          </el-form-item>
-          <el-form-item label="中文摘要" prop="abstract_cn">
-            （请在下框中输入稿件中文摘要,或从您的论文中复制过来）
-            <el-input type="textarea" rows="2" v-model="form.abstract_cn"></el-input>
-          </el-form-item>
-          <el-form-item label="英文摘要" prop="abstract_eng">
-            （请在下框中输入稿件英文摘要,或从您的论文中复制过来）
-            <el-input type="textarea" rows="2" v-model="form.abstract_eng"></el-input>
-          </el-form-item>
-          <el-upload
-            class="upload-demo"
-            drag
-            action="https://jsonplaceholder.typicode.com/posts/"
-            multiple>
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">注意：在上面上传稿件的pdf版本</div>
-          </el-upload>
-        </div>
-        <div class="button">
-          <el-button style="margin-top: 12px;" @click="change" >修改</el-button>
-        </div>
+    <div class="main">
+      <h1 style="color: #b7b7a4;margin-bottom: 50px ">个人信息</h1>
+      <el-form label-position="left" label-width="80px" :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
+        <el-form-item label="用户名" prop="username" >
+          <el-input type="text" v-model="ruleForm.username" ></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input type="text" v-model="ruleForm.email" ></el-input>
+        </el-form-item>
+        <el-form-item label="单位" prop="institude">
+          <el-input type="text" v-model="ruleForm.institude" ></el-input>
+        </el-form-item>
+                <el-form-item label="角色" prop="role">
+                  <el-radio-group v-model="ruleForm.role" >
+                    <el-radio :label="1" >投稿人</el-radio>
+                    <el-radio :label="2" >审稿人</el-radio>
+                    <el-radio :label="3" >管理员</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+        <el-button  style="margin-top: 50px;" @click="commit('ruleForm')">修改</el-button>
       </el-form>
     </div>
   </div>
-
 </template>
 
 <script>
 export default {
-  data(){
+  data() {
+    var validateUsername = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('用户名不能为空'));
+      }else{
+        callback();
+      }
+    };
+    var validateEmail = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请正确填写邮箱'));
+      } else {
+        if (value !== '') {
+          var reg=/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+          if(!reg.test(value)){
+            callback(new Error('请输入有效的邮箱'));
+          }
+        }
+        callback();
+      }
+    };
+    var checkAddress = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入地址'));
+      }  else {
+        callback();
+      }
+    };
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'));
+      } else {
+        callback();
+      }
+    };
     return {
-      form:'',
-      options: [{
-        value: '网络空间安全',
-        label: '网络空间安全'
-      }, {
-        value: '先进计算与数据处理',
-        label: '先进计算与数据处理'
-      }, {
-        value: '热点与综述',
-        label: '热点与综述'
-      }, {
-        value: '开发研究与工程应用',
-        label: '开发研究与工程应用'
-      }, {
-        value: '体系结构与软件技术',
-        label: '体系结构与软件技术'
-      }, {
-        value: '移动互联与通信技术',
-        label: '移动互联与通信技术'
-      }, {
-        value: '人工智能与模式识别',
-        label: '人工智能与模式识别'
-      }, {
-        value: '图形图像处理',
-        label: '图形图像处理'
-      }],
-
-    }
+      lable:'',
+      ruleForm: {
+        username: '',
+        // password: '',
+        email: '',
+        institude:'',
+        role:''
+      },
+      rules: {
+        username: [
+          { validator: validateUsername, trigger: 'blur' }
+        ],
+        // password: [
+        //   { validator: validatePass, trigger: 'blur' }
+        // ],
+        email: [
+          {validator: validateEmail, trigger:'blur'}
+        ],
+        institude: [
+          {validator: checkAddress,trigger: 'blur'}
+        ]
+      }
+    };
   },
-  created(){
-    this.getParams()
-  },
-  methods :{
+  methods:{
+    commit(formName) {
+      console.log(this.ruleForm)
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$http
+            .get("http://localhost:8080/ProjectWeb/InfoServlet", {params:
+                { method: 'update',
+                  username: this.ruleForm.username,
+                  role: this.ruleForm.role,
+                  institude: this.ruleForm.institude,
+                  email:this.ruleForm.email
+                }}, {emulateJSON: true})
+            .then((response) => {
+              this.$store.commit('setUsername', this.ruleForm.username);
+            }).catch(err =>{
+            console.log(err.data)
+          });
+        } else {
+          alert('修改失败');
+          return false;
+        }
+      });
+    },
+    // initData(){
+    //   this.$http
+    //     .get("http://localhost:8080/ProjectWeb/InfoServlet", {params:
+    //         { method: 'view',
+    //           username: this.$store.state.username
+    //         }}, {emulateJSON: true})
+    //     .then((response) => {
+    //       this.ruleForm=response.data;
+    //       // this.label=this.ruleForm.role
+    //     }).catch(err =>{
+    //     console.log(err.data)
+    //   });
+    // },
     getParams(){
-      // 取到路由带过来的参数
       const routerParams = this.$route.query.parms
       // 将数据放在当前组件的数据内
-      this.form= routerParams;
-      console.log(this.form)
-    },
-    change(){
-      this.$http
-        .get("http://localhost:8080/ProjectWeb/PaperServlet", {params:
-            { method: 'save',
-              id: this.form.id,
-              contributor_id: this.form.contributor_id,
-              contributor_name: this.form.contributor_name,
-              create_time: this.form.create_time,
-              update_time: this.form.update_time,
-              paper_title: this.form.paper_title,
-              abstract_eng: this.form.abstract_eng,
-              abstract_cn: this.form.abstract_cn,
-              paper_content: this.form.paper_content,
-              channel: this.form.channel,
-              keyword: this.form.keyword
-            }}, {emulateJSON: true})
-        .then((response) => {
-        }).catch(err =>{
-        console.log(err.data)
-      });
+      this.ruleForm= routerParams;
+      console.log(this.ruleForm.role)
     }
   },
-  watch: {
-    '$route': 'getParams'
+  mounted() {
+    this.getParams()
+    // this.initData();
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.header {
+.page{
   text-align: center;
-}
-.form {
-  margin: 0px auto;
-  margin-top: 40px;
   width: 70%;
-
-
-
-  .content {
-    border: 1px solid grey;
-    padding: 10px;
-
-    p {
-      margin: 9px 0px;
-    }
-  }
-
-  .info {
-    width: 80%;
-    margin: 0 auto;
-    .upload-demo{
-      text-align: center;
-    }
-    .final {
-      text-align: center;
-      height: 300px;
-      width: 100%;
-    }
-  }
-
-  .button {
-    margin-top: 40px;
-    text-align: center;
+  margin: 0 auto;
+  .main{
+    margin-top: 50px;
   }
 }
 </style>
