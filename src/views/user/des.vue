@@ -35,19 +35,19 @@ export default {
       console.log(this.form)
       this.stateFormat(this.form.status)
     },
-    stateFormat(row, column) {
-      console.log("ces")
-      if (row.status === 1) {
+    stateFormat(params) {
+      // console.log("ces")
+      if (params === 1) {
         this.form.status= '未上传'
-      } else if (row.status === 2) {
+      } else if (params === 2) {
         this.form.status= '已上传'
-      } else if (row.status === 3) {
+      } else if (params === 3) {
         this.form.status= '正在审核'
-      } else if (row.status === 4) {
+      } else if (params === 4) {
         this.form.status= '审核不通过'
-      } else if (row.status === 5) {
+      } else if (params === 5) {
         this.form.status= '通过审核，待发表'
-      }else if (row.status === 5) {
+      }else if (params === 5) {
         this.form.status= '审核不通过，不可再投稿，无效稿件'
       } else {
         this.form.status= '已发表'

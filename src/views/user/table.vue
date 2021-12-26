@@ -53,7 +53,7 @@ export default {
         create_time:'sd',
         channel:'人工智能与模式识别',
         contributor_name:'dfsnkafn',
-        status:1
+        status:3
       }]
     }
   },
@@ -78,6 +78,7 @@ export default {
 
     },
     handleview(row){
+      console.log(row)
       this.$router.push({
         path: '/user/des',
         // name: 'mallList',
