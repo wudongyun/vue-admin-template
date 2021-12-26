@@ -18,7 +18,7 @@
           size="mini"
           icon="el-icon-edit"
           @click="handle(scope.row)"
-          v-if="">修改
+          v-if="scope.row.status===4">修改
         </el-button>
         <el-button
           size="mini"
@@ -53,7 +53,7 @@ export default {
         create_time:'sd',
         channel:'人工智能与模式识别',
         contributor_name:'dfsnkafn',
-        status:3
+        status:4
       }]
     }
   },
@@ -122,9 +122,11 @@ export default {
         return '审核不通过'
       } else if (row.status === 5) {
         return '通过审核，待发表'
-      }else if (row.status === 5) {
+      }else if (row.status === 6) {
         return '审核不通过，不可再投稿，无效稿件'
-      } else {
+      } else if(rou.status===8){
+        return '二次提交，重新审核'
+      }else {
         return '已发表'
       }
     }

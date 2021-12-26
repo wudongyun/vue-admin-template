@@ -80,19 +80,23 @@ export default {
       });
     },
     stateFormat(params) {
-      // console.log("ces")
+      console.log("ces")
       if (params === 1) {
-        this.form.status=  '已创建，待送审'
-      } else  if(params === 2) {
-        this.form.status='正在审核中'
-      }else  if(params === 3) {
-        this.form.status='审核通过'
-      }else  if(params === 4) {
-        this.form.status= '审核驳回，待送审'
-      }else  if(params === 5) {
-        this.form.status= '二次审核中'
-      }else {
-        this.form.status= '驳回，关闭稿件工单'
+        this.form.status= '未上传'
+      } else if (params === 2) {
+        this.form.status= '已上传'
+      } else if (params === 3) {
+        this.form.status= '正在审核'
+      } else if (params === 4) {
+        this.form.status= '审核不通过'
+      } else if (params === 5) {
+        this.form.status= '通过审核，待发表'
+      }else if (params === 6) {
+        this.form.status= '审核不通过，不可再投稿，无效稿件'
+      }else if (params === 8) {
+        this.form.status= '二次提交，重新审核'
+      } else {
+        this.form.status= '已发表'
       }
     }
   },

@@ -36,7 +36,7 @@ export default {
       this.stateFormat(this.form.status)
     },
     stateFormat(params) {
-      // console.log("ces")
+      console.log("ces")
       if (params === 1) {
         this.form.status= '未上传'
       } else if (params === 2) {
@@ -47,8 +47,10 @@ export default {
         this.form.status= '审核不通过'
       } else if (params === 5) {
         this.form.status= '通过审核，待发表'
-      }else if (params === 5) {
+      }else if (params === 6) {
         this.form.status= '审核不通过，不可再投稿，无效稿件'
+      }else if (params === 8) {
+        this.form.status= '二次提交，重新审核'
       } else {
         this.form.status= '已发表'
       }

@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="header"><h3>稿件详情信息</h3></div>
+    <div class="header"><h3>再次投稿</h3></div>
     <div class="form">
       <el-form ref="form" status-icon :model="form" label-width="80px">
         <div class="info">
@@ -111,7 +111,8 @@ export default {
               abstract_cn: this.form.abstract_cn,
               paper_content: this.form.paper_content,
               channel: this.form.channel,
-              keyword: this.form.keyword
+              keyword: this.form.keyword,
+              status:8
             }}, {emulateJSON: true})
         .then((response) => {
         }).catch(err =>{
