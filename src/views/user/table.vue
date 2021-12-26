@@ -1,12 +1,12 @@
 <template>
   <div class="page">
     <el-table :data="tableData.slice((dictCurrentPage-1)*dictPageSize,dictCurrentPage*dictPageSize)" >
-      <el-table-column prop="id" label="编号" width='100px'></el-table-column>
-      <el-table-column prop="create_time" label="投稿时间" ></el-table-column>
-      <el-table-column prop="update_time" label="修改时间"  ></el-table-column>
-      <el-table-column prop="paper_title" label="文章题目"></el-table-column>
-      <el-table-column prop="reviewer_list" label="审稿人"></el-table-column>
-      <el-table-column prop="status"   label="审核状态" :formatter="stateFormat" ></el-table-column>
+      <el-table-column header-align="center" align="center" prop="id" label="编号" width='50px'></el-table-column>
+      <el-table-column header-align="center" align="center" prop="create_time" label="投稿时间"  width='120px'></el-table-column>
+      <el-table-column header-align="center" align="center" prop="update_time" label="修改时间" width='120px' ></el-table-column>
+      <el-table-column header-align="center" align="center" prop="paper_title" label="文章题目"  width='420px'></el-table-column>
+      <el-table-column  header-align="center" align="center" prop="reviewer_list" label="审稿人" width="200px"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="status"  label="审核状态" :formatter="stateFormat"  width='100px'></el-table-column>
       <el-table-column header-align="center" align="center"  label="操作" width="270px">
         <template slot-scope="scope">
         <el-button

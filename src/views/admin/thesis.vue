@@ -1,15 +1,14 @@
 <template>
   <div class="page">
     <el-table :data="tableData.slice((dictCurrentPage-1)*dictPageSize,dictCurrentPage*dictPageSize)" >
-      <el-table-column prop="id" label="编号" width='100px'></el-table-column>
-      <el-table-column prop="contributor_name" label="投稿人" ></el-table-column>
-      <el-table-column prop="create_time" label="投稿时间" ></el-table-column>
-      <el-table-column prop="update_time" label="修改时间" ></el-table-column>
-      <el-table-column prop="paper_title" label="文章题目"></el-table-column>
-      <el-table-column prop="channel" label="拟投栏目"></el-table-column>
-      <el-table-column prop="keyword" label="关键词"></el-table-column>
-      <el-table-column prop="status" label="审核状态" :formatter="stateFormat"  ></el-table-column>
-      <el-table-column prop="reviewer_list" label="审稿人"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="id" label="编号" width='50px'></el-table-column>
+      <el-table-column header-align="center" align="center" prop="contributor_name" label="投稿人"  width='70px'></el-table-column>
+      <el-table-column header-align="center" align="center" prop="create_time" label="投稿时间"  width='100px'></el-table-column>
+      <el-table-column header-align="center" align="center" prop="update_time" label="修改时间" width='100px' ></el-table-column>
+      <el-table-column header-align="center" align="center" prop="paper_title" label="文章题目"  width='200px'></el-table-column>
+      <el-table-column header-align="center" align="center" prop="keyword" label="关键词"  width='400px'></el-table-column>
+      <el-table-column header-align="center" align="center" prop="status"  label="审核状态" :formatter="stateFormat"  width='100px'></el-table-column>
+<!--      <el-table-column prop="reviewer_list" label="审稿人"></el-table-column>-->
       <el-table-column header-align="center" align="center" prop="operate" label="操作" width="270px">
         <template slot-scope="scope">
         <el-button
