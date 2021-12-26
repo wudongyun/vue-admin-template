@@ -11,13 +11,13 @@
         <el-form-item label="邮箱" prop="email">
           <el-input type="email" v-model="ruleForm.email"></el-input>
         </el-form-item>
-        <el-form-item label="角色" prop="role">
-          <el-radio-group v-model="ruleForm.role">
-            <el-radio label="1" >投稿人</el-radio>
-            <el-radio label="2" >审稿人</el-radio>
-            <el-radio label="3" >管理员</el-radio>
-          </el-radio-group>
-        </el-form-item>
+<!--        <el-form-item label="角色" prop="role">-->
+<!--          <el-radio-group v-model="ruleForm.role">-->
+<!--            <el-radio label="1" >投稿人</el-radio>-->
+<!--            <el-radio label="2" >审稿人</el-radio>-->
+<!--            <el-radio label="3" >管理员</el-radio>-->
+<!--          </el-radio-group>-->
+<!--        </el-form-item>-->
         <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="ruleForm.password" ></el-input>
         </el-form-item>
@@ -83,20 +83,20 @@ export default {
         callback();
       }
     };
-    var checkRole = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请选择角色'));
-      }  else {
-        callback();
-      }
-    };
+    // var checkRole = (rule, value, callback) => {
+    //   if (value === '') {
+    //     callback(new Error('请选择角色'));
+    //   }  else {
+    //     callback();
+    //   }
+    // };
     return {
       ruleForm: {
         username: '',
         checkPass: '',
         email: '',
         password: '',
-        role:''
+        // role:''
       },
       rules: {
         username: [
@@ -111,9 +111,9 @@ export default {
         checkPass: [
           { validator: validatePass2, trigger: 'blur' }
         ],
-        role: [
-          { validator: checkRole, trigger: 'blur' }
-        ]
+        // role: [
+        //   { validator: checkRole, trigger: 'blur' }
+        // ]
       }
     };
   },
@@ -133,7 +133,7 @@ export default {
                   username: this.ruleForm.username,
                   email:this.ruleForm.email,
                   password: this.ruleForm.password,
-                  actor: this.ruleForm.role
+                  // actor: this.ruleForm.role
                 }}, {emulateJSON: true})
             .then((response) => {
               this.$router.push({

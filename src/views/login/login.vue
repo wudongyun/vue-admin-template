@@ -90,15 +90,15 @@ export default {
           this.$http
             .get("http://localhost:8080/ProjectWeb/LoginServlet", {params:
                 {
-                  username: formName.username,
-                  password: formName.password,
+                  username: this.ruleForm.username,
+                  password: this.ruleForm.password,
                 }}, {emulateJSON: true})
             .then((response) => {
               this.$store.commit('setUsername', response.data.username);
               this.$store.commit('setUserID', response.data.id);
-              if(response.data.actor==="1"){
+              if(response.data.actor=="1"){
                 this.$router.replace('/user')
-              } else if(response.data.actor==="2"){
+              } else if(response.data.actor=="2"){
                 this.$router.replace('/review');
               } else{
                 this.$router.replace('/admin');

@@ -56,17 +56,21 @@ export default {
       // 将数据放在当前组件的数据内
       this.form= routerParams;
       // console.log(this.form)
+      this.stateFormat(this.form.status)
     },
     commit(){
       console.log(this.form)
       console.log(this.ruleform)
       this.$http
-        .get("http://localhost:8080/ProjectWeb/PaperServlet", {
+        .get("http://localhost:8080/ProjectWeb/ReviewServlet", {
           params:
-            { method: '',
-              id: this.form.id,
-              ispass:this.ruleform.ispass,
-              review_comment:this.ruleform.review_comment
+            { method: 'review',
+              paper_id: this.form.id,
+              status:this.ruleform.ispass,
+              review_comment:this.ruleform.review_comment,
+              review_id:this.$store.state.userid,
+              review_name:this.$store.state.username,
+              contributor_id:this.form.contributor_id
             }}, {emulateJSON: true})
         .then((response) => {
           this.tableData=response.data;
@@ -74,6 +78,22 @@ export default {
         }).catch(err =>{
         console.log(err.data)
       });
+    },
+    stateFormat(params) {
+      // console.log("ces")
+      if (params === 1) {
+        this.form.status=  '已创建，待送审'
+      } else  if(params === 2) {
+        this.form.status='正在审核中'
+      }else  if(params === 3) {
+        this.form.status='审核通过'
+      }else  if(params === 4) {
+        this.form.status= '审核驳回，待送审'
+      }else  if(params === 5) {
+        this.form.status= '二次审核中'
+      }else {
+        this.form.status= '驳回，关闭稿件工单'
+      }
     }
   },
   watch: {

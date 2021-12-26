@@ -3,10 +3,10 @@
     <el-table :data="tableData.slice((dictCurrentPage-1)*dictPageSize,dictCurrentPage*dictPageSize)" >
       <el-table-column prop="id" label="编号" width='100px'></el-table-column>
       <el-table-column prop="create_time" label="投稿时间" ></el-table-column>
-      <el-table-column prop="update_time" label="修改时间"  :formatter="formatSex"></el-table-column>
+      <el-table-column prop="update_time" label="修改时间"  ></el-table-column>
       <el-table-column prop="paper_title" label="文章题目"></el-table-column>
       <el-table-column prop="reviewer_list" label="审稿人"></el-table-column>
-      <el-table-column prop="status"   label="审核状态" ></el-table-column>
+      <el-table-column prop="status"   label="审核状态" :formatter="stateFormat" ></el-table-column>
       <el-table-column header-align="center" align="center"  label="操作" width="270px">
         <template slot-scope="scope">
         <el-button
@@ -52,7 +52,8 @@ export default {
         id:1,
         create_time:'sd',
         channel:'人工智能与模式识别',
-        contributor_name:'dfsnkafn'
+        contributor_name:'dfsnkafn',
+        status:1
       }]
     }
   },
@@ -98,7 +99,7 @@ export default {
       this.$http
         .get("http://localhost:8080/ProjectWeb/PaperServlet", {
           params:
-            { method: '',
+            { method: 'delete',
               id: row.id
             }}, {emulateJSON: true})
         .then((response) => {
@@ -107,8 +108,25 @@ export default {
         console.log(err.data)
       });
       this.initData();
+    },
+    stateFormat(row, column) {
+      console.log("ces")
+      if (row.status === 1) {
+        return  '已创建，待送审'
+      } else  if(row.status === 2) {
+        return '正在审核中'
+      }else  if(row.status === 3) {
+        return '审核通过'
+      }else  if(row.status === 4) {
+        return '审核驳回，待送审'
+      }else  if(row.status === 5) {
+        return '二次审核中'
+      }else {
+        return '驳回，关闭稿件工单'
+      }
     }
   }
+
 }
 </script>
 

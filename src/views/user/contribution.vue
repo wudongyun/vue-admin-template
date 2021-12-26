@@ -124,7 +124,7 @@
           <p>稿件题目：{{ form.paper_title }}</p>
           <p>中文摘要：{{ form.abstract_cn }}</p>
           <p>英文摘要：{{ form.abstract_eng }}</p>
-          <p>拟投栏目：{{ form.lable }}</p>
+          <p>拟投栏目：{{ form.channel }}</p>
           <p>稿件关键字：{{ form.keyword }}</p>
         </div>
         <div class="info" v-if="active===7">

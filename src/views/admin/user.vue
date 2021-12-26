@@ -5,7 +5,7 @@
       <el-table-column prop="name" label="姓名" ></el-table-column>
       <el-table-column prop="institude" label="单位" ></el-table-column>
       <el-table-column prop="email" label="邮箱"></el-table-column>
-      <el-table-column prop="password" label="密码"></el-table-column>
+<!--      <el-table-column prop="password" label="密码"></el-table-column>-->
       <el-table-column header-align="center" align="center" prop="operate" label="操作" width="270px">
         <template slot-scope="scope">
           <el-button
@@ -75,9 +75,10 @@ export default {
   methods:{
     initData(){
       this.$http
-        .get("http://localhost:8080/ProjectWeb/AdminServlet", {
+        .get("http://localhost:8080/ProjectWeb/UserServlet", {
           params:
             { method: 'list',
+              actor:1
             }}, {emulateJSON: true})
         .then((response) => {
           this.tableData=response.data;
@@ -106,10 +107,10 @@ export default {
     },
     handledelete(row){
       this.$http
-        .get("http://localhost:8080/ProjectWeb/PaperServlet", {
+        .get("http://localhost:8080/ProjectWeb/UserServlet", {
           params:
-            { method: '',
-              id: row.id
+            { method: 'delete',
+              username: row.username
             }}, {emulateJSON: true})
         .then((response) => {
           alert("删除成功！")

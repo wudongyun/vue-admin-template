@@ -2,10 +2,10 @@
   <div class="page">
     <el-table :data="tableData.slice((dictCurrentPage-1)*dictPageSize,dictCurrentPage*dictPageSize)"  >
       <el-table-column header-align="center" align="center" prop="id" label="编号" width='50px'></el-table-column>
-      <el-table-column header-align="center" align="center" prop="name" label="姓名" width="70px"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="username" label="姓名" width="70px"></el-table-column>
       <el-table-column header-align="center" align="center" prop="institude" label="单位" ></el-table-column>
       <el-table-column header-align="center" align="center" prop="email" label="邮箱" ></el-table-column>
-      <el-table-column header-align="center" align="center" prop="password" label="密码"></el-table-column>
+<!--      <el-table-column header-align="center" align="center" prop="password" label="密码"></el-table-column>-->
       <el-table-column header-align="center" align="center" prop="operate" label="操作" width="270px">
         <template slot-scope="scope">
           <el-button
@@ -75,9 +75,10 @@ export default {
   methods:{
     initData(){
       this.$http
-        .get("http://localhost:8080/ProjectWeb/PaperServlet", {
+        .get("http://localhost:8080/ProjectWeb/UserServlet", {
           params:
-            { method: '',
+            { method: 'list',
+              actor:2
             }}, {emulateJSON: true})
         .then((response) => {
           this.tableData=response.data;
@@ -106,10 +107,10 @@ export default {
     },
     handledelete(row){
       this.$http
-        .get("http://localhost:8080/ProjectWeb/PaperServlet", {
+        .get("http://localhost:8080/ProjectWeb/UserServlet", {
           params:
-            { method: '',
-              id: row.id
+            { method: 'delete',
+              username: row.username
             }}, {emulateJSON: true})
         .then((response) => {
           alert("删除成功！")

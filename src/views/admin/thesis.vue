@@ -8,7 +8,7 @@
       <el-table-column prop="paper_title" label="文章题目"></el-table-column>
       <el-table-column prop="channel" label="拟投栏目"></el-table-column>
       <el-table-column prop="keyword" label="关键词"></el-table-column>
-      <el-table-column prop="status" label="审核状态" ></el-table-column>
+      <el-table-column prop="status" label="审核状态" :formatter="stateFormat"  ></el-table-column>
       <el-table-column prop="reviewer_list" label="审稿人"></el-table-column>
       <el-table-column header-align="center" align="center" prop="operate" label="操作" width="270px">
         <template slot-scope="scope">
@@ -102,7 +102,7 @@ export default {
       this.$http
         .get("http://localhost:8080/ProjectWeb/PaperServlet", {
           params:
-            { method: '',
+            { method: 'delete',
               id: row.id
             }}, {emulateJSON: true})
         .then((response) => {
@@ -111,6 +111,22 @@ export default {
         console.log(err.data)
       });
       this.initData();
+    },
+    stateFormat(row, column) {
+      console.log("ces")
+      if (row.status === 1) {
+        return  '已创建，待送审'
+      } else  if(row.status === 2) {
+        return '正在审核中'
+      }else  if(row.status === 3) {
+        return '审核通过'
+      }else  if(row.status === 4) {
+        return '审核驳回，待送审'
+      }else  if(row.status === 5) {
+        return '二次审核中'
+      }else {
+        return '驳回，关闭稿件工单'
+      }
     }
   }
 

@@ -6,7 +6,6 @@
       <p style="margin-left :400px;">姓名：{{ form.name}}</p>
       <p style="margin-left :400px;">单位：{{ form.institude }}</p>
       <p style="margin-left :400px;">邮箱：{{ form.email }}</p>
-      <p style="margin-left :400px;">密码：{{ form.password }}</p>
     </div>
   </div>
 </template>

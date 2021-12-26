@@ -8,12 +8,12 @@
       <el-table-column prop="paper_title" label="文章题目"></el-table-column>
       <el-table-column prop="channel" label="拟投栏目"></el-table-column>
       <el-table-column prop="keyword" label="关键词"></el-table-column>
-      <el-table-column prop="status"  label="审核状态" ></el-table-column>
+      <el-table-column prop="status"  label="审核状态" :formatter="stateFormat"></el-table-column>
       <el-table-column header-align="center" align="center" prop="operate" label="操作" width="200px">
         <template slot-scope="scope">
         <el-button
           size="mini"
-          v-if="scope.row.status===1||scope.row.status==3||scope.row.status===4||scope.row.status==6"
+          v-if="scope.row.status===1||scope.row.status==4||scope.row.status===5||scope.row.status==6"
           icon="el-icon-zoom-in"
           @click="handleview(scope.row)">查看
         </el-button>
@@ -21,7 +21,7 @@
           size="mini"
           icon="el-icon-edit"
           @click="handle(scope.row)"
-          v-if="scope.row.status===2||scope.row.status==5">审稿
+          v-if="scope.row.status===2||scope.row.status==3">审稿
         </el-button>
         </template>
       </el-table-column>
@@ -67,7 +67,7 @@ export default {
       this.$http
         .get("http://localhost:8080/ProjectWeb/PaperServlet", {
           params:
-            { method: '',
+            { method: 'list',
               name: this.$store.state.username
             }}, {emulateJSON: true})
         .then((response) => {
@@ -95,6 +95,22 @@ export default {
           parms:row
         }
       })
+    },
+    stateFormat(row, column) {
+      console.log("ces")
+      if (row.status === 1) {
+        return '已创建，待送审'
+      } else if (row.status === 2) {
+        return '正在审核中'
+      } else if (row.status === 3) {
+        return '审核通过'
+      } else if (row.status === 4) {
+        return '审核驳回，待送审'
+      } else if (row.status === 5) {
+        return '二次审核中'
+      } else {
+        return '驳回，关闭稿件工单'
+      }
     }
   }
 }

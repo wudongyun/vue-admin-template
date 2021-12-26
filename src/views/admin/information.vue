@@ -6,9 +6,6 @@
         <el-form-item label="用户名" prop="username" >
           <el-input type="text" v-model="ruleForm.username" ></el-input>
         </el-form-item>
-        <el-form-item label="密 码" prop="password">
-          <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
-        </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input type="text" v-model="ruleForm.email" ></el-input>
         </el-form-item>
@@ -61,21 +58,21 @@ export default {
     return {
       ruleForm: {
         username: '',
-        password: '',
+        // password: '',
         email: '',
-        address:''
+        institude:''
       },
       rules: {
         username: [
           { validator: validateUsername, trigger: 'blur' }
         ],
-        password: [
-          { validator: validatePass, trigger: 'blur' }
-        ],
+        // password: [
+        //   { validator: validatePass, trigger: 'blur' }
+        // ],
         email: [
           {validator: validateEmail, trigger:'blur'}
         ],
-        address: [
+        institude: [
           {validator: checkAddress,trigger: 'blur'}
         ]
       }
@@ -87,12 +84,12 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http
-            .get("http://localhost:8080/ProjectWeb/", {params:
-                { method: '',
-                  name: formName.username,
-                  password: formName.password,
-                  institude: formName.institude,
-                  email:formName.email
+            .get("http://localhost:8080/ProjectWeb/InfoServlet", {params:
+                { method: 'update',
+                  username: this.ruleForm.username,
+                  // password: this.ruleForm.password,
+                  institude: this.ruleForm.institude,
+                  email:this.ruleForm.email
                 }}, {emulateJSON: true})
             .then((response) => {
               this.$store.commit('setUsername', this.ruleForm.username);
@@ -107,9 +104,9 @@ export default {
     },
     initData(){
       this.$http
-        .get("http://localhost:8080/ProjectWeb/", {params:
-            { method: '',
-              name: this.$store.state.username
+        .get("http://localhost:8080/ProjectWeb/InfoServlet", {params:
+            { method: 'view',
+              username: this.$store.state.username
             }}, {emulateJSON: true})
         .then((response) => {
           this.ruleForm=response.data;
